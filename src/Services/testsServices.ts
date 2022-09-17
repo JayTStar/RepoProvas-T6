@@ -28,3 +28,9 @@ async function checkTeacherDiscipline(id: number){
         }
     }
 }
+
+export async function getByDiscipline(id: number){
+    const tests = await testRepository.getTestsbyDiscipline(id);
+
+    return tests
+}

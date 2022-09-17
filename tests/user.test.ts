@@ -7,7 +7,7 @@ beforeEach(async () => {
     await prisma.$executeRaw`TRUNCATE TABLE "Users" CASCADE`;
 });
 
-describe("Teste de sign-up e sign-in", () => {
+describe("Teste de sign-up", () => {
     it("Teste de sign-up retorno 201", async () =>{
         const user = await userFactory();
 
@@ -27,7 +27,9 @@ describe("Teste de sign-up e sign-in", () => {
 
         expect(result.status).toBe(409);
     });
+});
 
+describe("Testes de sign-in", () => {
     it("Teste de sign-in return 200", async () => {
         const user = await userFactory();
 
@@ -46,7 +48,7 @@ describe("Teste de sign-up e sign-in", () => {
 
         expect(result.status).toBe(401);
     });
-});
+})
 
 afterAll(async () => {
     await prisma.$disconnect();
