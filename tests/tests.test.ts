@@ -1,4 +1,3 @@
-import { array } from 'joi';
 import supertest from 'supertest';
 import {app} from '../src/app';
 import { prisma } from '../src/Config/db';
@@ -12,19 +11,31 @@ describe("Post /test", () =>{
     it("Adiconando teste return 201", async () => {
         const test = await testFactory();
 
-        const result = await supertest(app).post("/test").send(test)
-    });
+        const result = await supertest(app).post("/test").send(test);
+        const createdTest = await prisma.test.findFirst({
+            where:{ name: test.name}
+        });
 
-    it.todo("Adicionando teste já adicionado return 409");
+        delete createdTest.id
+
+        expect(result.status).toBe(201);
+        expect(createdTest).not.toBe(null);
+        expect(createdTest).toStrictEqual(test);
+    });
 });
 
 describe("Get /test", () => {
     it("buscando test por diciplina retorno 200", async () => {
-        const test = await testFactory();
 
-        await supertest(app).post("/test").send(test);
+        const result = await supertest(app).get(`/test/discipline`);
 
-        const result = await supertest(app).get(`/test/discipline/${test.teacherDisciplineId}`);
+        expect(result.status).toBe(200);
+        expect(result.body).toBeInstanceOf(Array);
+    });
+
+    it("Buscando test por instrutor retorno 200", async () => {
+
+        const result = await supertest(app).get(`/test/teacher`);
 
         expect(result.status).toBe(200);
         expect(result.body).toBeInstanceOf(Array);

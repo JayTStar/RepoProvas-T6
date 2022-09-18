@@ -19,17 +19,59 @@ export async function createTest(test: TestData){
     await prisma.test.create({ data: test });
 }
 
-export async function getTestsbyDiscipline(id: number){
-    const tests = await prisma.test.findMany({
-        where: { teacherDisciplineId: id },
-        select: {
-            id: true,
-            name: true,
-            teacherDiscipline: {
-                select: {
-                    teacher: {
+export async function getTestsbyDiscipline(){
+    const tests = await prisma.terms.findMany({
+        select:{
+            number: true,
+            Disciplines:{
+                select:{
+                    name: true,
+                    TeachersDiscipline:{
                         select:{
-                            name:true,
+                            teacher:{
+                                select:{
+                                    name: true
+                                }
+                            },
+                            Test:{
+                                select:{
+                                    name: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        orderBy:{
+            id: 'asc'
+        }
+    });
+
+    return tests;
+}
+
+export async function getTestsByTeacher(){
+    const tests = prisma.teachers.findMany({ 
+        select:{
+            TeachersDiscipline:{
+                select:{
+                    dicipline:{
+                        select:{
+                            name: true
+                        }
+                    },
+                    Test:{
+                        select:{
+                            name: true,
+                            category:{
+                                select:{
+                                    name:true
+                                }
+                            }
+                        },
+                        orderBy:{
+                            categoryId: 'asc'
                         }
                     }
                 }
@@ -37,5 +79,5 @@ export async function getTestsbyDiscipline(id: number){
         }
     });
 
-    return tests;
+    return tests
 }

@@ -12,9 +12,15 @@ export async function postTest(req: Request, res: Response){
 };
 
 export async function getByDiscipline(req: Request, res: Response){
-    const {id} = req.params;
 
-    const tests = await testsService.getByDiscipline(parseInt(id));
+    const tests = await testsService.getByDiscipline();
 
     res.status(200).send(tests);
+}
+
+export async function getByTeacher(req: Request, res: Response){
+    
+    const tests = await testsService.getByTeacher();
+
+    res.status(200).send(tests)
 }

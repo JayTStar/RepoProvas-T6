@@ -29,8 +29,14 @@ async function checkTeacherDiscipline(id: number){
     }
 }
 
-export async function getByDiscipline(id: number){
-    const tests = await testRepository.getTestsbyDiscipline(id);
+export async function getByDiscipline(){
+    const tests = await testRepository.getTestsbyDiscipline();
+
+    return tests
+}
+
+export async function getByTeacher(){
+    const tests = await testRepository.getTestsByTeacher();
 
     return tests
 }
