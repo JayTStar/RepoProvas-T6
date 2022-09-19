@@ -3,13 +3,15 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { Sessions } from "@prisma/client";
 
-import * as sessionRepository from "../Repositories/sessionRepositories.js";
-import * as userRepository from "../Repositories/userRepositories.js";
+import * as sessionRepository from "../Repositories/sessionRepositories";
+import * as userRepository from "../Repositories/userRepositories";
 
 dotenv.config();
 
 export async function validateToken(req: Request, res: Response, next: NextFunction){
     const authorization: string = req.headers.authorization!;
+
+    console.log(authorization);
 
     const token = authorization?.replace("Bearer ", "").trim();
 

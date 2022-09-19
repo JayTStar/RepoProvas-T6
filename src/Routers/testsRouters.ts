@@ -7,6 +7,7 @@ import * as testSchema from "../Schemas/testSchema"
 
 export const testsRouter = Router();
 
+testsRouter.use(validateToken);
 testsRouter.post("/test",validateSchema(testSchema.test), testsController.postTest);
 testsRouter.get("/test/discipline", testsController.getByDiscipline);
 testsRouter.get("/test/teacher", testsController.getByTeacher);
