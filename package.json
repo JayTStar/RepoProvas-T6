@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "dotenv -e .env.test jest",
+    "test": "dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest",
     "dev": "nodemon src/server.ts",
     "build": "tsc",
     "start": "node dist/src/server.js"
